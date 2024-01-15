@@ -1,0 +1,142 @@
+﻿@using EntityLayer.Models;
+@model List<Product>
+@{
+    var asc = "asc";
+    var minPoint = 1;
+    var category = "All";
+}
+
+<h1>Products</h1>
+<div class="d-flex">
+  
+    <div class="p-2 flex-grow-1 d-flex flex-wrap flex-row mb-3">
+        @foreach (var p in Model)
+        {
+            @Html.Partial("_SingleProductPartial", p)
+            ;
+
+
+
+        }
+
+
+    </div>
+    <div class="p-2  p-3">
+        <form class="d-flex flex-column" asp-controller="Product" asp-action="FilterProduct" method="get" >
+                  <label for="puan">Minimum Rate:</label>
+            <input value="@ViewBag.minRating" defaultValue=0 type="number" id="puan" min="0" max="5" name="minRating">
+
+            <label for="priceOrder">Price:</label>
+            <select value="@ViewBag.priceOrder" id="priceOrder" name="priceOrder">
+                @if (ViewBag.priceOrder == "asc")
+                {
+                    <option selected value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+
+                }
+                else if(ViewBag.priceOrder == "desc")
+                {
+                    <option  value="asc">Ascending</option>
+                    <option selected value="desc">Descending</option>
+
+                }
+                else
+                {
+                    <option  value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                }
+
+              
+                <!-- Diğer kategori seçenekleri -->
+            </select>
+
+       
+               <label for="kategori">Category:</label>
+            <select value="@ViewBag.category" id="kategori" name="categoryId">
+                @if(ViewBag.category==0){
+                    <option selected value=0>All</option>
+
+                }
+                else
+                {
+                    <option value=0>All</option>
+                    
+                }
+             
+                @foreach (var kategori in ViewBag.v)
+                {
+                    @if(ViewBag.category == kategori.Id)
+                    {
+                        <option selected value=@kategori.Id>@kategori.CategoryName</option>
+
+                    }
+                    else
+                    {
+                        <option value=@kategori.Id>@kategori.CategoryName</option>
+                    }
+
+
+                }
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        
+    
+    
+    
+    
+    
+    
+    
+    </div>
+</div>
+
+ <script>
+    var minRating = document.getElementById("puan");
+    var category = document.getElementById("kategori");
+    var priceOrder = document.getElementById("priceOrder");
+    category.addEventListener('change', e => {
+        
+        category.value = e.target.value;
+        console.log(category.value)
+    })
+
+ 
+
+
+    function filter(e) {
+        e.preventDefault();
+     
+    
+
+        var baseUrl = window.location.origin + window.location.pathname; // Mevcut URL'nin kökü
+
+        var queryParams = new URLSearchParams(window.location.search);
+
+        // Filtre değerlerini güncelle
+        queryParams.set('minRating', minRating.value)
+    
+        queryParams.set('priceOrder', priceOrder.value);
+        queryParams.set('categoryId', category.value);
+
+
+       
+
+
+
+
+        var newUrl = baseUrl + '?' + queryParams.toString();
+       
+      
+        window.location.href = newUrl;
+
+      //  document.getElementById("puan").value = queryParams.get('minRating');
+        // Yeni URL'ye yönlendir
+    }
+
+ 
+ 
+ 
+ 
+ </script>

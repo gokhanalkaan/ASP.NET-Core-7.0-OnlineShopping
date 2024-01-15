@@ -1,0 +1,111 @@
+﻿@using EntityLayer.Models;
+@model List<CartItem> ?
+
+
+<head>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <div id="checkout">
+    <!-- Checkout will insert the payment form here -->
+  </div>
+</body>
+
+
+<h1>User Cart</h1>
+<div class="d-flex">
+    <div class="p-2 flex-grow-1 left">
+    @foreach (CartItem ?cartItem in Model)
+    {
+        @if (cartItem!=null && cartItem.Product !=null)
+        {
+
+
+                <div data-cartitemid="@cartItem.Id" class="shadow-sm p-3 mb-5 bg-body-tertiary rounded card mb-3" style="max-width: 540px; position:relative;">
+                    <a type="button" onclick="removeFromCart('@cartItem.Id','@(cartItem.Quantity*cartItem.Product.ProductPrice)')" class="btn-close" aria-label="Close" style="position:absolute; right:0px; top:0px;"></a>
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src=@cartItem.Product.ProductPhotoUrl class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@cartItem.Product.ProductName</h5>
+                                <p class="card-text">@cartItem.Quantity pieces</p>
+                                <p class="card-text"><small class="text-body-secondary">$ @(@cartItem.Product.ProductPrice* cartItem.Quantity ) </small></p>
+                                <a asp-controller="Product" asp-action="Index" asp-route-id=@cartItem.ProductId type="button" class="btn btn-primary">Go to Product</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                       
+                        
+              
+                   
+                   
+       
+
+       
+
+        
+          
+
+        }
+        else
+        {
+          <h1>Your cart is empty.</h1>
+        }
+
+ 
+
+
+
+
+}
+    </div>
+    <div class="p-2  right">
+
+
+
+
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="height: 180px; width: 350px;">
+                   <h2>Summary</h2>
+                   <div style="display:flex;">
+                       <span>Total:</span>
+                             <p id="total"> @ViewBag.cartTotal</p>
+
+                   </div>
+     
+            <form action="/create-checkout-session" method="POST">
+            <button type="submit" class="btn btn-warning">SHOP NOW!</button>
+         </form>
+
+
+         
+               </div>
+            
+
+
+   
+
+
+    </div>
+</div>
+
+ 
+<script>
+    function removeFromCart(cartItemId,productTotalPrice) {
+
+        var confirmed = confirm("Are you sure ? Item will be deleted.");
+        if (confirmed) {
+            cartItemDiv = document.querySelector(`div[data-cartitemid="${cartItemId}"]`)
+            totalp = document.querySelector(`#total`);
+            totalp.textContent = (parseInt(totalp.textContent) - parseInt(productTotalPrice)).toString() + ".00 $";
+
+            cartItemDiv.remove();
+            fetch(`http://localhost:5240/cart/removeFromCart?cartItemId=${cartItemId}`, {method:'POST',
+        
+        
+        })
+        }
+    }
+</script>

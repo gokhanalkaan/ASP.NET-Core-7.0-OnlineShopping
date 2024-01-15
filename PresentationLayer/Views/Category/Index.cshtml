@@ -1,0 +1,36 @@
+﻿@using EntityLayer.Models;
+@model List<Product>
+<h1>Products</h1>
+<div class="d-flex">
+<div class="p-2  p-3">
+    <ul class="list-group" style="width: 14rem;">
+        <a asp-controller="Category" asp-action="Index"  class="list-group-item list-group-item-action">
+            All
+        </a>
+        @foreach (var c in ViewBag.v)
+        {
+                <a asp-controller="Category" asp-action="Index" asp-route-categoryId="@c.Id" class="list-group-item list-group-item-action">
+                @c.CategoryName
+            </a>
+
+
+        }
+
+
+
+    </ul>
+
+</div>
+<div class="p-2 flex-grow-1 d-flex flex-wrap flex-row mb-3">
+    @foreach (var p in Model)
+    {
+        @Html.Partial("_SingleProductPartial", p)
+        ;
+
+
+
+    }
+
+
+</div>
+</div>

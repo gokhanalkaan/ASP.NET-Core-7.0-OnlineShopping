@@ -1,0 +1,25 @@
+﻿@using DTOLayer;
+@model CommentDto;
+
+<form style="display:flex;flex-direction:column;width:50%;" class="myform" asp-controller="Comment" asp-action="UpdateComment" method="post">
+    <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+    <input type="hidden" asp-for="@Model.ProductId" value="@Model.ProductId" />
+
+    <label asp-for="@Model.CommentTitle">Comment Title:(Optional)</label>
+    <input class="mb-3" asp-for="@Model.CommentTitle"  defaultValue="@Model.CommentTitle" />
+
+    <label asp-for="@Model.CommentText">Comment Text:</label>
+    <textarea class="mb-3" asp-for="@Model.CommentText" defaultValue="@Model.CommentText"></textarea>
+
+
+    <label asp-for="@Model.Point">Your Point:</label>
+    <select class="mb-3" asp-for="@Model.Point">
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value=@i>@i </option>
+            }
+        </select>
+
+       
+        <button class="btn-primary" style="width:30%" type="submit">Update Comment</button>
+    </form>

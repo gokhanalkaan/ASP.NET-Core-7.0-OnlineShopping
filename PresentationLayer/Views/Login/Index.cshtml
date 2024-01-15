@@ -1,0 +1,26 @@
+﻿@using DTOLayer;
+@model UserLoginDto
+
+<form method="post">
+   
+    <div class="mb-3">
+        <label for="productNameInput" class="form-label">Username</label>
+        <input asp-for=Username class="form-control" id="productNameInput" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+   
+
+    <div class="mb-3">
+        <label for="productDescriptionInput" class="form-label">Password</label>
+        <input type="password" asp-for=Password class="form-control" id="productDescriptionInput" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+
+
+
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

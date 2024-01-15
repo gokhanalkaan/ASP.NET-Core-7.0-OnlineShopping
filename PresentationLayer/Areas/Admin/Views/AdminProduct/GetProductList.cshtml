@@ -1,0 +1,71 @@
+﻿@using EntityLayer.Models;
+@model List<Product>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "GetProductList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Product List</h1>
+
+<table style="width:100%; border-collapse:collapse">
+    <tr style={{ textAlign: 'left' }}>
+        <th>Id</th>
+        <th>Photo</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Operations</th>
+    </tr>
+
+    @foreach(var item in Model){
+
+    <tr data-rowid="@item.Id" style={{ textAlign: 'left' , padding: '8px' }}>
+        <td>@item.Id</td>
+
+        <td>
+            <img style="height:50px;width:50px;" src=@item.ProductPhotoUrl></img>
+        </td>
+        <td>@item.ProductName</td>
+
+       
+
+        <td>
+           <span>@item.ProductPrice</span>
+
+
+        </td>
+
+        <td>
+                <a href="/Admin/AdminProduct/EditProduct?productId=@item.Id" class="btn" style="background-color:orange;">
+                 
+                Edit
+            </a>
+                <a type="button" onclick="removeProduct('@item.Id')" class="btn" style="background-color:red;">
+                 
+                Delete
+            </a>
+
+        </td>
+    </tr>
+
+    }
+ 
+
+</table>
+
+<script>
+    function removeProduct(productId) {
+
+        var confirmed = confirm("Are you sure ? Item will be deleted.");
+        if (confirmed) {
+            document.querySelector(`tr[data-rowid="${productId}"]`).remove()
+           
+
+            fetch(`/AdminProduct/deleteProduct?productId=${productId}`, {
+                method: 'POST',
+        
+        
+        })
+        }
+    }
+</script>

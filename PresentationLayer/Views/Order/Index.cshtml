@@ -1,0 +1,199 @@
+﻿@using DTOLayer;
+@model List<OrderDto>
+
+    <h1>Your Orders</h1>
+@if(Model!=null){
+
+@foreach(var item in Model)
+{
+    <div class="card mb-3" style="max-width: 940px;">
+        <div class="row g-0">
+            <div class="col-md-2" style="display:flex; align-items:center">
+                <span >OrderId:</span>
+                <p class="card-text">@item.Id</p>
+
+            </div>
+            <div class="col-md-6">
+                <div class="card-body" >
+                    <h5 class="card-title">Adress</h5>
+
+                    <div style="display:flex;align-items:center;">
+
+                        <span>Country:</span>
+                        <p class="card-text">@item.Country</p>
+                    </div>
+                    <div style="display:flex;align-items:center;">
+
+                        <span>City:</span>
+                        <p class="card-text">@item.PostOffice</p>
+                    </div>
+
+                    <div style="display:flex;align-items:center;">
+
+                        <span>District:</span>
+                        <p class="card-text">@item.City</p>
+                    </div>
+                    <div style="display:flex;align-items:center;">
+
+                        <span>Adress:</span>
+                        <p class="card-text">@item.Address</p>
+                    </div>
+                    <div style="display:flex;align-items:center;">
+
+                        <span>Postal Code:</span>
+                        <p class="card-text">@item.PostalCode</p>
+                    </div>
+
+
+               
+
+                </div>
+            </div>
+            <div class="col-md-2">
+              
+                <div class="card-body">
+                    <h5 class="card-title">Price</h5>
+                    <span>$ @item.Total.</span>
+                </div>
+            </div>
+            <div class="col-md-2">
+
+                <div class="card-body">
+                    <button data-close="@item.Id" style="display:none;" onclick="handleClose('@item.Id')">Close</button>
+
+
+                    <button data-open="@item.Id" onclick="handleOpen('@item.Id','@item.OrderProducts')">Open</button>
+                </div>
+            </div>
+        </div>
+        <div data-itemid="@item.Id">
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+}
+
+}
+
+else
+{
+    <p>You have not ordered yet.</p>
+}
+<script>
+ 
+
+    function handleOpen( itemId,products ) {
+        const closebutton = document.querySelector(`button[data-close="${itemId}"]`);
+        const openbutton = document.querySelector(`button[data-open="${itemId}"]`);
+        const itemDiv = document.querySelector(`div[data-itemid="${itemId}"]`)
+        var myList = @Html.Raw(Json.Serialize(Model));
+       
+       
+        var orderProducts = myList.find(p => p.id == itemId).orderProducts;
+        //var orderProducts = myList[itemId].orderProducts;
+        console.log("itemId::" + itemId)
+
+      //  console.log("myList" + JSON.stringify(myList))
+       // console.log("order" + JSON.stringify(order))
+
+        console.log("products" + JSON.stringify(orderProducts))
+       console.log( typeof(orderProducts))
+        var maporders = orderProducts.map((data) => {
+            return `
+                <div class="card mb-3" style="max-width: 980px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src=${data.productPhotoUrl} class="img-fluid rounded-start" alt="...">
+        </div>
+      <div class="col-md-2">
+
+                    <div class="card-body">
+                            <h5 class="card-title">${data.productName}</h5>
+                      
+                    </div>
+                </div>
+
+                 <div class="col-md-2">
+
+                    <div class="card-body">
+                            <h5 class="card-title">${data.quantity} piece</h5>
+                      
+                    </div>
+                </div>
+
+                       <div class="col-md-2">
+
+                        <div class="card-body">
+                                <h5 class="card-title">$ ${data.quantity*data.productPrice} </h5>
+
+                        </div>
+
+                      
+
+                    </div>
+
+                        <div class="col-md-2">
+
+                        <div class="card-body">
+                         <a href="/Product/Index?productId=${data.productId}" class="btn btn-primary">See Product</a>
+                               
+
+                        </div>
+
+            
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                    `
+
+        });
+        
+    itemDiv.innerHTML=maporders
+        closebutton.style.display = 'block';
+        openbutton.style.display = 'none';
+     
+  
+        
+
+    }
+
+    function handleClose(itemId) {
+        const closebutton = document.querySelector(`button[data-close="${itemId}"]`);
+        const openbutton = document.querySelector(`button[data-open="${itemId}"]`);
+        const itemDiv = document.querySelector(`div[data-itemid="${itemId}"]`);
+        closebutton.style.display = 'none';
+        openbutton.style.display = 'block';
+        console.log("itemid:" + itemId)
+        open = false;
+       itemDiv.innerHTML=``;
+
+
+
+    }
+
+</script>

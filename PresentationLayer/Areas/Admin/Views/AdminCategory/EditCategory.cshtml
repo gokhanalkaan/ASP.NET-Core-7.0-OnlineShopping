@@ -1,0 +1,22 @@
+﻿@using EntityLayer.Models
+@model Category
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AuthoringTagHelpers
+@{
+    ViewData["Title"] = "EditCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<form method="post" style="width:70%;margin:auto;">
+    <h1>EditCategory</h1>
+
+    <div class="mb-3">
+        <label for="productNameInput" class="form-label">Category Name</label>
+        <input  asp-for=CategoryName class="form-control" id="productNameInput" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

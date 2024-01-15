@@ -1,0 +1,18 @@
+﻿@using EntityLayer.Models;
+@model List<Product>
+
+<div style="display:flex; flex-direction:column; align-items:flex-start">
+
+    <h2>Daily Most Selled Products</h2>
+    <div style="display:flex;">
+
+
+
+        @foreach (var item in Model)
+        {
+            @Html.Partial("_SingleProductPartial",item)
+            ;
+
+        }
+    </div>
+</div>

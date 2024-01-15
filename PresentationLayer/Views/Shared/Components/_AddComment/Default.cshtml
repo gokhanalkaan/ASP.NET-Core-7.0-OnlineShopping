@@ -1,0 +1,27 @@
+﻿@using DTOLayer;
+@{
+    var comment = ViewBag.comment as CommentDto  ;
+    var isOrdered = ViewBag.isOrdered;
+   
+
+    var newComment = new CommentDto();
+    newComment.ProductId = ViewBag.productId;
+}
+
+
+@if (comment!= null && isOrdered==true)
+{
+    @Html.Partial("_UpdateCommentPartial", comment);
+}
+else if(comment==null && isOrdered==true )
+{
+    @Html.Partial("_AddCommentPartial", newComment);
+    
+}
+
+else
+{
+    
+} 
+
+

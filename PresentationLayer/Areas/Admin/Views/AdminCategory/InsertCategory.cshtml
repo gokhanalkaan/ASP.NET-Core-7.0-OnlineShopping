@@ -1,0 +1,23 @@
+﻿
+@using DTOLayer;
+@model AddCategoryDto
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AuthoringTagHelpers
+
+@{
+    ViewData["Title"] = "InsertCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post" style="width:70%;margin:auto;">
+    <h1>Add Category</h1>
+  
+
+    <div class="mb-3">
+        <label for="categoryNameInput" class="form-label">Category Name</label>
+        <input type="text" asp-for="CategoryName" class="form-control" id="categoryNameInput" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

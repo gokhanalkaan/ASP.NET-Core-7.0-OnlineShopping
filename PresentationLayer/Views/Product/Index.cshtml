@@ -1,0 +1,63 @@
+﻿@using DTOLayer;
+@using DataAccessLayer.Concrete
+@model AddtoBasketDto
+
+
+<div style="display:flex;align-items:flex-start; justify-content: flex-end;">
+    <div style="display:flex;align-items:center; justify-content: flex-end; flex:4">
+        <img  style="height:90%;width:100%;" src=@Model.ProductPhotoUrl />
+    
+
+        </div>
+
+
+
+    <div  style="flex:2;margin-top:5vh">
+        <div class="productContainer">
+
+            <h2>@Model.ProductTitle</h2>
+            <p>@Model.ProductDescription</p>
+            <p> $ @Model.ProductPrice </p>
+            <div style="display:flex;align-items:center;gap:3px;">
+                @await Component.InvokeAsync("_ProductPoint", Model.ProductId)<span>Point</span>
+
+            </div>
+           
+            
+
+
+        </div>
+    </div>
+
+
+    <div style="flex:1;margin-top:25vh;">
+        <h3> <bold>$ @Model.ProductPrice</bold></h3>
+        <form style="display:flex; flex-direction:column;gap:30px;height:100vh" class="myform" asp-controller="Cart" asp-action="AddToCart" method="post">
+            <input type="hidden" asp-for=@Model.ProductId value=@Model.ProductId />
+            <div>
+            <label for="qty">Quantity</label>
+            <select id="qty" asp-for="@Model.Quantity">
+                @for(int i = 1; i <= 15; i++)
+                {
+                    <option value=@i>@i </option>
+                }
+            </select>
+            </div>
+      
+            <button type="submit" class="btn btn-primary">Sepete Ekle</button>
+        </form>
+
+    </div>
+        
+
+
+
+    </div>
+
+  @if (User.Identity.IsAuthenticated)
+{@await Component.InvokeAsync("_AddComment", @Model.ProductId)
+
+    }
+
+  
+@await Component.InvokeAsync("_ProductComments", @Model.ProductId)

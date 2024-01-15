@@ -1,0 +1,63 @@
+﻿@using EntityLayer.Models;
+@model List<Category>
+@{
+    ViewData["Title"] = "GetCategoryList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>GetCategoryList</h1>
+<table style="width:100%; border-collapse:collapse">
+    <tr style={{ textAlign: 'left' }}>
+        <th>Id</th>
+        
+        <th>Title</th>
+       
+        <th>Operations</th>
+    </tr>
+
+    @foreach(var item in Model){
+
+    <tr data-rowid="@item.Id" style={{ textAlign: 'left' , padding: '8px' }}>
+        <td>@item.Id</td>
+
+      
+        <td>@item.CategoryName</td>
+
+       
+
+
+        <td>
+              <a asp-area="Admin" asp-controller="AdminProduct" asp-action="EditProduct" asp-route-productId="@item.Id" class="btn" style="background-color:orange;">
+                 
+                Edit
+            </a>
+                <a type="button" onclick="removeCategory('@item.Id')" class="btn" style="background-color:red;">
+                 
+                Delete
+            </a>
+
+        </td>
+    </tr>
+
+    }
+ 
+
+</table>
+
+<script>
+    function removeCategory(categoryId) {
+
+        var confirmed = confirm("Are you sure ? Item will be deleted.");
+        if (confirmed) {
+            document.querySelector(`tr[data-rowid="${categoryId}"]`).remove()
+           
+
+            fetch(`/AdminCategory/deleteCategory?categoryId=${categoryId}`, {method: 'POST',
+        
+        
+        })
+        }
+    }
+</script>
+
+

@@ -1,0 +1,45 @@
+﻿@using EntityLayer.Models;
+@model List<Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="margin-left:-118px;width:100vw;">
+ 
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <video style="height:90vh;width:100vw;object-fit:cover" src="https://cdn.pixabay.com/vimeo/208571065/apple-8396.mp4?width=640&hash=e7582aabdf80b879226566b144ad53b23eb02198" class="d-block w-100 object-fit-scale" alt="..." autoplay muted />
+        </div>
+        <div class="carousel-item">
+            <img style="height:90vh;width:100vw;object-fit:contain" src="https://www.incehesap.com/resim/urun/202310/6527f9fe821e85.60626774_iefgqlphknjmo.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img style="height:90vh;width:100vw;object-fit:contain" src="https://ffo3gv1cf3ir.merlincdn.net/SiteAssets/Cihaz/cep-telefonu/samsung/galaxy-s20-ultra/cg/2.png" class="d-block w-100" alt="Galaxy S20">
+        </div>
+    </div>
+    <button  class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span  class="carousel-control-prev-icon " aria-hidden="true"></span>
+        <span   class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon " aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div style="margin-top:150px">
+
+@await Component.InvokeAsync("_YearlyMostSelledProducts")
+@await Component.InvokeAsync("_MonthlyMostSelledProducts")
+@await Component.InvokeAsync("_DailyMostSelledProducts")
+@await Component.InvokeAsync("_BestRankedProducts")
+@foreach (var c in ViewBag.v)
+{
+        @await Component.InvokeAsync("_BestCategoryProducts", c)
+
+
+}
+
+</div>
+
+

@@ -1,0 +1,62 @@
+﻿@using EntityLayer.Models
+@model List<Comment>
+@{
+    float avaragePoint=0.0f;
+    if (Model != null && Model.Any())
+    {
+         avaragePoint = (float)Model.Average(p => p.Point) ;
+    }
+}
+
+@if (avaragePoint > 0)
+{
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+        
+
+ 
+    @for (int i = 1; i <= ((int)avaragePoint); i++)
+    {
+        <span style=" display: inline-block;
+                  font-size: 40px;
+                  color: gold; ">&starf;</span>
+
+    }
+    <span style="font-size:25px">
+        @avaragePoint Point
+    </span>
+    </div>
+
+}
+ <h3>Comments</h3>
+@foreach(var cm in Model)
+{
+   
+  
+    
+    <div style="display:flex;flex-direction:column;margin-top:20px;">
+
+
+    <div>
+        @await Component.InvokeAsync("_UserInfoComponent", @cm.UserId)
+
+    </div>
+    <div>
+        @for(int i = 1; i <= cm.Point; i++)
+        {
+                <span style=" display: inline-block;
+                  font-size: 20px;
+                  color: gold; ">&starf;</span>
+            
+        }
+    </div>
+
+     <div>
+                <h6>@cm.CommentTitle</h6>
+                <p>@cm.CommentText</p>
+
+     </div>
+
+    </div>
+    
+}
+

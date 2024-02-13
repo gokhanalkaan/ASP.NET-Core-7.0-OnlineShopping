@@ -38,8 +38,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             }
             if (_userManager.IsInRoleAsync(user, "Admin").Result)
             {
-                // Kullanıcı admin rolüne sahip
-                // İlgili işlemler burada yapılır
+               
                 ViewBag.username = user.UserName;
                 return View();
             }
